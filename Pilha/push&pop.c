@@ -1,4 +1,5 @@
-//PUSH - Adiciona um novo elemento na PILHA.
+//PUSH - Adiciona um novo elemento na PILHA (empilhar).
+//POP - Remove e retorna o elemento do topo da PILHA (desempilhar).
 #include <stdio.h>
 
 typedef struct {
@@ -29,7 +30,7 @@ void imprimir_pessoa(Pessoa pessoa) {
     printf("Nome: %s\nData: %2d/%2d%4d\n",pessoa.nome, pessoa.data.dia, pessoa.data.mes, pessoa.data.ano);
 }
 
-//Função para a operação push (empilhar).
+//Função para a operação PUSH (empilhar).
 *** empilhar(No *topo) {
     No *novo = malloc(sizeof(No));
     if(novo == NULL) {
@@ -40,9 +41,20 @@ void imprimir_pessoa(Pessoa pessoa) {
         return novo;
     }
 }
+//Função para a operação POP (desempilhar).
+No* desempilhar(No **topo) {
+    if(*topo != NULL) {
+        No *remover = *topo;
+        *topo = remover->proximo;
+        return remover;
+    }else {
+        printf("Pilha vazia.\n");
+        return NULL;
+    }
+}
 
 int main(void) {
-    No *topo = NULL;
+    No *topo, *remover = NULL;
     int opcao;
 
     do {
@@ -55,7 +67,13 @@ int main(void) {
             topo = empilhar(topo);
             break;
         case 2:
-
+            remover = desempilhar(&topo);
+            if(remover) {
+                printf("Elemento removido com sucesso!.\n");
+                imprimir_pessoa(remover->pessoa);
+            }else {
+                printf("Sem no a remover.\n");
+            }
             break;
         case 3:
                 
